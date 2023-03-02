@@ -16,9 +16,8 @@ export async function getStaticPaths() {
   
     // Get the paths we want to pre-render based on posts
     const paths = posts.posts.map((post) => ({
-      params: { pid: String(post.id) },
+      params: { pid: post.id+"" },
     }));
-    console.log(paths)
     // We'll pre-render only these paths at build time.
     // { fallback: false } means other routes should 404.
     return { paths, fallback: false };
@@ -29,8 +28,6 @@ export async function getStaticPaths() {
   export async function getStaticProps({ params }) {
     // params contains the post `id`.
     // If the route is like /posts/1, then params.id is 1
-    console.log("PARAMS")
-    console.log(params)
     const res = await fetch(`https://dummyjson.com/posts/${params.pid}`)
     const post = await res.json()
   
